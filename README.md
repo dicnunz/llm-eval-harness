@@ -6,6 +6,13 @@ A tiny, reproducible evaluation harness for **local LLMs** served through an **O
 
 It runs a small task pack, saves results to `runs/` as JSON + Markdown, and tracks score history.
 
+## Why this project
+This repo demonstrates I can:
+- integrate with OpenAI-compatible APIs (local model servers like LM Studio)
+- design reproducible evals (JSON + markdown reports, run history)
+- add safety/behavior checks and model-as-judge scoring
+- ship an installable CLI with tests + CI
+
 ## Requirements
 - Python 3.10+
 - LM Studio running a local server (OpenAI-compatible)
