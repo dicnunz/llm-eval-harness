@@ -37,6 +37,13 @@ Outputs:
 harness summary
 ```
 
+## Development
+Run the unit tests locally:
+```bash
+python -m compileall src
+pytest -q
+```
+
 ## What it evaluates (current pack)
 - Exact-match instruction following
 - JSON formatting correctness
