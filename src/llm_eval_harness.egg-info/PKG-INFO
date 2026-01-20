@@ -1,0 +1,6 @@
+Metadata-Version: 2.4
+Name: llm-eval-harness
+Version: 0.0.1
+Summary: Local LLM evaluation harness (LM Studio/OpenAI-compatible)
+Requires-Python: >=3.10
+Requires-Dist: openai>=1.0.0
