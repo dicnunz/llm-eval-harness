@@ -36,6 +36,29 @@ pip install -e .
 harness run --base-url http://localhost:1234/v1 --model openai/gpt-oss-20b
 ```
 
+### Eval packs
+Run the default pack or choose a specific one:
+```bash
+harness run --pack evals/basic.json
+```
+
+To write a new pack, create a JSON file with a `tasks` array. Each task needs
+`id`, `type`, and `prompt`, plus any type-specific fields:
+```json
+{
+  "name": "my-pack",
+  "description": "Short description of the pack.",
+  "tasks": [
+    {
+      "id": "exact_string",
+      "type": "exact_match",
+      "prompt": "Reply with exactly: OK",
+      "expected": "OK"
+    }
+  ]
+}
+```
+
 Outputs:
 - `runs/run_<timestamp>.json` (machine-readable)
 - `runs/report_<timestamp>.md` (human-readable)
