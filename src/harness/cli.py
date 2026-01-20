@@ -159,19 +159,19 @@ def main():
     p = argparse.ArgumentParser(prog="harness")
     sub = p.add_subparsers(dest="cmd", required=True)
 
+    # summary
     from harness.summary import main as summary_main
-
-run = sub.add_parser("run", help="Run the built-in eval pack")
-        summary = sub.add_parser("summary", help="Show last run scores")
+    summary = sub.add_parser("summary", help="Show last run scores")
     summary.set_defaults(func=lambda args: summary_main())
 
-run.add_argument("--base-url", default=BASE_URL_DEFAULT)
+    # run
+    run = sub.add_parser("run", help="Run the built-in eval pack")
+    run.add_argument("--base-url", default=BASE_URL_DEFAULT)
     run.add_argument("--model", default=MODEL_DEFAULT)
     run.add_argument("--api-key", default="lm-studio")
     run.set_defaults(func=cmd_run)
 
     args = p.parse_args()
     args.func(args)
-
 if __name__ == "__main__":
     main()
