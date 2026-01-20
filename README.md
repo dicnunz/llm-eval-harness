@@ -1,3 +1,5 @@
+![tests](https://github.com/dicnunz/llm-eval-harness/actions/workflows/tests.yml/badge.svg)
+
 # llm-eval-harness
 
 A tiny, reproducible evaluation harness for **local LLMs** served through an **OpenAI-compatible API** (tested with LM Studio).
