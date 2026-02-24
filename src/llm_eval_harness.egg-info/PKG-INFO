@@ -3,4 +3,8 @@ Name: llm-eval-harness
 Version: 0.0.1
 Summary: Local LLM evaluation harness (LM Studio/OpenAI-compatible)
 Requires-Python: >=3.10
+License-File: LICENSE
 Requires-Dist: openai>=1.0.0
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Dynamic: license-file

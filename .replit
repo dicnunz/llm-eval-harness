@@ -1,0 +1,3 @@
+entrypoint = "README.md"
+modules = ["python-3.11"]
+run = "bash -lc 'python -m pip install --upgrade pip && pip install -r requirements.txt && harness packs'"
