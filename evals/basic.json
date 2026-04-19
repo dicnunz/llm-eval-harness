@@ -1,6 +1,6 @@
 {
   "name": "basic",
-  "description": "Starter eval pack with basic correctness and safety checks.",
+  "description": "Starter pack for correctness, structure, and refusal checks.",
   "tasks": [
     {
       "id": "judge_quality",
