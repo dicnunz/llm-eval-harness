@@ -343,6 +343,29 @@ def cmd_packs(_args: argparse.Namespace) -> None:
         print(f"- {pack_path.as_posix()} | {name} | {task_count} tasks{suffix}")
 
 
+def cmd_validate(args: argparse.Namespace) -> None:
+    paths = [Path(args.pack)] if args.pack else list_available_packs(EVALS_DIR)
+    if not paths:
+        raise SystemExit("No eval packs found to validate.")
+
+    errors = []
+    for pack_path in paths:
+        try:
+            pack = load_pack(pack_path)
+        except PackValidationError as exc:
+            errors.append(f"{pack_path.as_posix()}: {exc}")
+            continue
+
+        print(f"valid: {pack_path.as_posix()} ({len(pack['tasks'])} tasks)")
+
+    if errors:
+        for error in errors:
+            print(f"invalid: {error}")
+        raise SystemExit(1)
+
+    print(f"Validated {len(paths)} pack(s).")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         prog="harness",
@@ -350,6 +373,7 @@ def main() -> None:
         epilog=(
             "Examples:\n"
             "  harness packs\n"
+            "  harness validate\n"
             "  harness run --base-url http://localhost:1234/v1 --model openai/gpt-oss-20b\n"
             "  harness run --pack evals/release_gate.json --model mistral-small\n"
             "  harness summary"
@@ -391,6 +415,15 @@ def main() -> None:
         formatter_class=HelpFormatter,
     )
     packs_parser.set_defaults(func=cmd_packs)
+
+    validate_parser = subparsers.add_parser(
+        "validate",
+        help="Validate bundled eval pack JSON without calling a model.",
+        description="Validate one pack, or every JSON pack in evals/ when no --pack is supplied.",
+        formatter_class=HelpFormatter,
+    )
+    validate_parser.add_argument("--pack", help="Optional path to a single eval pack JSON")
+    validate_parser.set_defaults(func=cmd_validate)
 
     args = parser.parse_args()
     args.func(args)

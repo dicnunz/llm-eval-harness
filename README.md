@@ -4,6 +4,8 @@
 
 Tiny reproducible local-LLM evals over any OpenAI-compatible API.
 
+![LLM eval harness scorecard visual](docs/assets/generated/llm-eval-hero.png)
+
 This repo exists for one narrow job: quickly sanity-check a local model server, save the run as real artifacts, and keep a lightweight score history while you swap models, prompts, or serving stacks.
 
 ## Why this exists
@@ -59,6 +61,7 @@ pip install -e .[dev]
 
 ```bash
 harness packs
+harness validate
 ```
 
 Expected shape:
@@ -68,6 +71,8 @@ Available eval packs:
 - evals/basic.json | basic | 6 tasks | Starter pack for correctness, structure, and refusal checks.
 - evals/release_gate.json | release-gate | 5 tasks | Tiny pre-change gate for local model swaps and server config changes.
 ```
+
+`harness validate` checks every bundled pack without calling a model.
 
 ### 4) Run a local eval
 
@@ -180,6 +185,7 @@ This repo is intentionally small, but it is not hand-wavy:
 ```bash
 python -m compileall src
 pytest -q
+harness validate
 ```
 
 ## License

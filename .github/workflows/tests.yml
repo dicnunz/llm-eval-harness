@@ -25,3 +25,4 @@ jobs:
         run: |
           python -m compileall src
           pytest -q
+          harness validate

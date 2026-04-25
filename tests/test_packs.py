@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from harness import cli
-from harness.cli import PackValidationError, cmd_packs, load_pack
+from harness.cli import PackValidationError, cmd_packs, cmd_validate, load_pack
 
 
 def test_load_pack_success():
@@ -66,3 +66,23 @@ def test_cmd_packs_prints_metadata(tmp_path, monkeypatch, capsys):
     assert "Available eval packs:" in out
     assert "alpha.json | alpha | 1 tasks | Alpha pack." in out
     assert "beta.json | beta | 1 tasks | Beta pack." in out
+
+
+def test_cmd_validate_checks_every_pack(tmp_path, monkeypatch, capsys):
+    pack = tmp_path / "alpha.json"
+    pack.write_text(
+        json.dumps(
+            {
+                "name": "alpha",
+                "tasks": [{"id": "ok", "type": "exact_match", "prompt": "Reply with OK", "expected": "OK"}],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    monkeypatch.setattr(cli, "EVALS_DIR", tmp_path)
+    cmd_validate(argparse.Namespace(pack=None))
+
+    out = capsys.readouterr().out
+    assert "valid: " in out
+    assert "Validated 1 pack(s)." in out
